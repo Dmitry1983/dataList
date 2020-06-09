@@ -11,15 +11,17 @@ import {
 } from 'react-native'
 import { data } from './src/data'
 
+const all = true
+
 const Item = ({ name, text, booked }) => {
 	return (
 		<TouchableOpacity
 			//style={styles.item}
 			//onPress={() => console.log(name)}
 			onPress={() => Alert.alert(name, text)}
-			activeOpacity={0.3}
+			activeOpacity={0.4}
 		>
-			{booked ? (
+			{all ? (
 				<View style={styles.item}>
 					<View>
 						<Text style={styles.title}>{name}</Text>
@@ -58,11 +60,11 @@ const styles = StyleSheet.create({
 		marginBottom: 8,
 	},
 	item: {
-		backgroundColor: '#3498DB',
+		backgroundColor: '#4D9DFF',
 		padding: 20,
 		marginVertical: 8,
 		marginHorizontal: 16,
-		borderRadius: 16,
+		borderRadius: 8,
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 	},
