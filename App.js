@@ -5,17 +5,31 @@ import {
 	StyleSheet,
 	FlatList,
 	TouchableOpacity,
+	Alert,
+	ScrollView,
+	SafeAreaView,
 } from 'react-native'
 import { data } from './src/data'
 
-const Item = ({ name, text }) => {
+const Item = ({ name, text, booked }) => {
 	return (
 		<TouchableOpacity
-			style={styles.item}
-			onPress={() => console.log(text)}
+			//style={styles.item}
+			//onPress={() => console.log(name)}
+			onPress={() => Alert.alert(name, text)}
 			activeOpacity={0.3}
 		>
-			<Text style={styles.title}>{name}</Text>
+			{booked ? (
+				<View style={styles.item}>
+					<View>
+						<Text style={styles.title}>{name}</Text>
+					</View>
+					<View>
+						<Text style={styles.title}>{booked ? 'true' : 'false'}</Text>
+					</View>
+				</View>
+			) : null}
+
 			{console.log(name)}
 		</TouchableOpacity>
 	)
@@ -26,7 +40,9 @@ const App = () => {
 		<View style={styles.container}>
 			<FlatList
 				data={data}
-				renderItem={({ item }) => <Item name={item.title} text={item.text} />}
+				renderItem={({ item }) => (
+					<Item name={item.title} text={item.text} booked={item.booked} />
+				)}
 				keyExtractor={(item) => item.id}
 			/>
 		</View>
@@ -39,6 +55,7 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		marginTop: 8,
+		marginBottom: 8,
 	},
 	item: {
 		backgroundColor: '#3498DB',
@@ -46,6 +63,8 @@ const styles = StyleSheet.create({
 		marginVertical: 8,
 		marginHorizontal: 16,
 		borderRadius: 16,
+		flexDirection: 'row',
+		justifyContent: 'space-between',
 	},
 	title: {
 		fontSize: 26,
