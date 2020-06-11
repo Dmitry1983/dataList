@@ -22,7 +22,7 @@ const App = () => {
 
 	//useEffect(() => {}, [inputData])
 
-	const ModalWindow = ({ name, text, id, booked }) => {
+	const ModalWindow = () => {
 		return (
 			<View style={styles.centeredView}>
 				<Modal animationType="slide" transparent={false} visible={modalVisible}>
@@ -39,12 +39,15 @@ const App = () => {
 							<Text>Close</Text>
 						</TouchableOpacity>
 					</View>
+					<Text>123</Text>
 				</Modal>
 			</View>
 		)
 	}
 
-	const onPressHandler = (text, id, booked) => {}
+	const onPressHandler = (name, text, id, booked) => {
+		setModalVisible(!modalVisible)
+	}
 
 	const Item = ({ name, text, id, booked }) => {
 		return (
@@ -53,7 +56,7 @@ const App = () => {
 				// onPress={() => console.log(text)}
 				//onPress={() => Alert.alert(text, id)}
 				onPress={() => {
-					setModalVisible(!modalVisible)
+					onPressHandler(name, text, id, booked)
 				}}
 				onLongPress={() => {
 					removeItem(id)
@@ -183,14 +186,11 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
-		//marginTop: 22,
-		//backgroundColor: 'grey',
 		width: '75%',
 		height: '75%',
 	},
 	modalView: {
 		margin: 20,
-		backgroundColor: 'white',
 		padding: 35,
 		alignItems: 'center',
 	},
