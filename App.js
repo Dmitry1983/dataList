@@ -97,11 +97,13 @@ const styles = StyleSheet.create({
 		marginBottom: 80,
 	},
 	item: {
-		backgroundColor: '#3498DB',
+		backgroundColor: '#4D9DFF',
 		padding: 20,
 		marginVertical: 8,
 		marginHorizontal: 16,
-		borderRadius: 16,
+		borderRadius: 8,
+		flexDirection: 'row',
+		justifyContent: 'space-between',
 	},
 	title: {
 		fontSize: 26,
