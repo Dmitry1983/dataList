@@ -9,6 +9,7 @@ import {
 	TextInput,
 	SafeAreaView,
 	Switch,
+	Modal,
 } from 'react-native'
 import { data } from './src/data'
 
@@ -17,8 +18,31 @@ const App = () => {
 	const [inputData, setInputData] = useState(data)
 	const [isEnabled, setIsEnabled] = useState(false)
 	const toggleSwitch = () => setIsEnabled((previousState) => !previousState)
+	const [modalVisible, setModalVisible] = useState(false)
 
 	//useEffect(() => {}, [inputData])
+
+	const ModalWindow = ({ name, text, id, booked }) => {
+		return (
+			<View style={styles.centeredView}>
+				<Modal animationType="slide" transparent={false} visible={modalVisible}>
+					<View style={styles.modalView}>
+						<TextInput
+							style={{ ...styles.input, width: '125%', marginLeft: 0 }}
+						/>
+						<TouchableOpacity
+							style={styles.item}
+							onPress={() => {
+								setModalVisible(!modalVisible)
+							}}
+						>
+							<Text>Close</Text>
+						</TouchableOpacity>
+					</View>
+				</Modal>
+			</View>
+		)
+	}
 
 	const onPressHandler = (text, id, booked) => {}
 
@@ -27,7 +51,10 @@ const App = () => {
 			<TouchableOpacity
 				style={styles.item}
 				// onPress={() => console.log(text)}
-				onPress={() => Alert.alert(text, id)}
+				//onPress={() => Alert.alert(text, id)}
+				onPress={() => {
+					setModalVisible(!modalVisible)
+				}}
 				onLongPress={() => {
 					removeItem(id)
 				}}
@@ -86,7 +113,7 @@ const App = () => {
 					value={isEnabled}
 				/>
 			</View>
-
+			<ModalWindow />
 			<View style={styles.container}>
 				<FlatList
 					data={inputData}
@@ -151,5 +178,20 @@ const styles = StyleSheet.create({
 	},
 	switchBtn: {
 		marginRight: 20,
+	},
+	centeredView: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		//marginTop: 22,
+		//backgroundColor: 'grey',
+		width: '75%',
+		height: '75%',
+	},
+	modalView: {
+		margin: 20,
+		backgroundColor: 'white',
+		padding: 35,
+		alignItems: 'center',
 	},
 })
