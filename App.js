@@ -8,16 +8,21 @@ import {
 	Alert,
 	TextInput,
 	SafeAreaView,
+	Switch,
 } from 'react-native'
 import { data } from './src/data'
 
 const App = () => {
 	const [value, setValue] = useState('')
 	const [inputData, setInputData] = useState(data)
+	const [isEnabled, setIsEnabled] = useState(false)
+	const toggleSwitch = () => setIsEnabled((previousState) => !previousState)
 
 	//useEffect(() => {}, [inputData])
 
-	const Item = ({ name, text, id }) => {
+	const onPressHandler = (text, id, booked) => {}
+
+	const Item = ({ name, text, id, booked }) => {
 		return (
 			<TouchableOpacity
 				style={styles.item}
@@ -30,6 +35,7 @@ const App = () => {
 			>
 				<Text style={styles.title}>{name}</Text>
 				{/* {console.log(name)} */}
+				<Text style={styles.title}>{booked.toString()}</Text>
 			</TouchableOpacity>
 		)
 	}
@@ -42,6 +48,7 @@ const App = () => {
 					id: Date.now().toString(),
 					title: value,
 					text: (value + ' ').repeat(5),
+					booked: isEnabled,
 				},
 			]
 			setInputData(data)
@@ -73,13 +80,23 @@ const App = () => {
 				<TouchableOpacity style={styles.btnAdd} onPress={addItem}>
 					<Text style={styles.title}>ADD</Text>
 				</TouchableOpacity>
+				<Switch
+					style={styles.switchBtn}
+					onValueChange={toggleSwitch}
+					value={isEnabled}
+				/>
 			</View>
 
 			<View style={styles.container}>
 				<FlatList
 					data={inputData}
 					renderItem={({ item }) => (
-						<Item name={item.title} text={item.text} id={item.id} />
+						<Item
+							name={item.title}
+							text={item.text}
+							id={item.id}
+							booked={item.booked}
+						/>
 					)}
 					keyExtractor={(item) => item.id}
 				/>
@@ -111,7 +128,7 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 	},
 	input: {
-		width: '70%',
+		width: '50%',
 		fontSize: 20,
 		marginLeft: 16,
 		borderWidth: 0.25,
@@ -131,5 +148,8 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		marginTop: 20,
 		justifyContent: 'space-between',
+	},
+	switchBtn: {
+		marginRight: 20,
 	},
 })
