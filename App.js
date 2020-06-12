@@ -12,6 +12,7 @@ import {
 } from 'react-native'
 import { data } from './src/data'
 import { styles } from './src/styles'
+import { FilterBar } from './src/FilterBar'
 
 const App = () => {
 	const [value, setValue] = useState('')
@@ -19,8 +20,9 @@ const App = () => {
 	const [isEnabled, setIsEnabled] = useState(false)
 	const toggleSwitch = () => setIsEnabled((previousState) => !previousState)
 	const [modalVisible, setModalVisible] = useState(false)
+	const [filter, setFilter] = useState(null)
 
-	//useEffect(() => {}, [inputData])
+	useEffect(() => {}, [inputData])
 
 	const ModalWindow = () => {
 		return (
@@ -28,7 +30,10 @@ const App = () => {
 				<Modal animationType="slide" transparent={false} visible={modalVisible}>
 					<View style={styles.modalView}>
 						<TextInput
-							style={{ ...styles.input, width: '125%', marginLeft: 0 }}
+							style={{
+								...styles.input,
+								...styles.inputAdd,
+							}}
 						/>
 						<TouchableOpacity
 							style={styles.item}
@@ -72,7 +77,7 @@ const App = () => {
 
 	const addItem = () => {
 		if (value.trim()) {
-			const data = [
+			const dataAdd = [
 				...inputData,
 				{
 					id: Date.now().toString(),
@@ -81,7 +86,7 @@ const App = () => {
 					booked: isEnabled,
 				},
 			]
-			setInputData(data)
+			setInputData(dataAdd)
 			setValue('')
 		} else {
 			Alert.alert('Ошибка ввода')
@@ -89,12 +94,14 @@ const App = () => {
 	}
 
 	const removeItem = (id) => {
-		const data = inputData.filter((element) => element.id !== id)
-		setInputData(data)
+		const dataRemove = inputData.filter((element) => element.id !== id)
+		setInputData(dataRemove)
 		//console.log(data)
 	}
 
-	const editItem = (id) => {}
+	const editItem = (id) => {
+		console.log(id)
+	}
 
 	return (
 		<SafeAreaView>
@@ -116,7 +123,11 @@ const App = () => {
 					value={isEnabled}
 				/>
 			</View>
+			<View>
+				<FilterBar />
+			</View>
 			<ModalWindow />
+
 			<View style={styles.container}>
 				<FlatList
 					data={inputData}

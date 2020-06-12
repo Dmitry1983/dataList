@@ -29,6 +29,10 @@ export const styles = StyleSheet.create({
 		borderRadius: 16,
 		paddingHorizontal: 16,
 	},
+	inputAdd: {
+		width: '125%',
+		marginLeft: 0,
+	},
 	btnAdd: {
 		backgroundColor: '#3498DB',
 		borderRadius: 16,
@@ -43,7 +47,7 @@ export const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 	},
 	switchBtn: {
-		marginRight: 20,
+		marginRight: 0,
 	},
 	centeredView: {
 		flex: 1,
